@@ -23,9 +23,9 @@ from datetime import date, datetime, timedelta
 import random
 
 spark = SparkSession.builder.getOrCreate()
-OUTPUT_PATH = "/Volumes/deliveries/default/generated_fact_data"
+OUTPUT_PATH = "/Volumes/deliveries/default/generated_shipping_data"
 
-TODAY = date.today() + timedelta(days=1) # modify here to add days
+TODAY = date.today() #+ timedelta(days=1) # modify here to add days
 random.seed()
 shipments = []
 

@@ -12,9 +12,11 @@ Script Purpose:
 =============================================================
  '''
 
+from datetime import date, datetime, timedelta
 from pyspark.sql import SparkSession
 
 spark = SparkSession.builder.getOrCreate()
+TODAY = date.today()
 hubs = [
     (1, "Warsaw Hub", "Warsaw", "CENTRAL"),
     (2, "Krakow Hub", "Krakow", "REGIONAL"),
@@ -32,9 +34,9 @@ columns = [
 
 df = spark.createDataFrame(hubs, columns)
 
-df.write \
+df.coalesce(1).write \
     .mode("overwrite") \
     .option("header", True) \
-    .csv("/Volumes/deliveries/default/generated_dim_data/gen_delivery_hub")
+    .csv(f"/Volumes/deliveries/default/generated_hubs_data/hubs_{TODAY.strftime('%Y%m%d')}")
 
 print("dim_delivery_hub created")

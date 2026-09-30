@@ -12,10 +12,11 @@ Script Purpose:
 =============================================================
  '''
 
+from datetime import date, datetime, timedelta
 from pyspark.sql import SparkSession
 
 spark = SparkSession.builder.getOrCreate()
-
+TODAY = date.today()
 customers = [
     (6, "Marek Wisniewski", "INDIVIDUAL", "Lodz"),
     (7, "Katarzyna Wojcik", "INDIVIDUAL", "Warsaw"),
@@ -132,10 +133,9 @@ columns = [
 ]
 
 df = spark.createDataFrame(customers, columns)
-
 df.coalesce(1).write \
     .mode("overwrite") \
     .option("header", True) \
-    .csv("/Volumes/deliveries/default/generated_dim_data/gen_customer_info")
+    .csv(f"/Volumes/deliveries/default/generated_customer_data/customers_{TODAY.strftime('%Y%m%d')}")
 
 print("dim_customer created")
